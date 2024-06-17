@@ -107,6 +107,9 @@ def run_trial(subject_path, trial_number, condition_name, task_name, use_button_
         "/cam_R/color/image_raw",
         "/cam_R/aligned_depth_to_color/image_raw",
         "/cam_R/color/camera_info",
+        "/cam_M/color/image_raw",
+        "/cam_M/aligned_depth_to_color/image_raw",
+        "/cam_M/color/camera_info",
         "/tf", "/tf_static", "/clock",
         "-O", rosbag_file,
         "-q"

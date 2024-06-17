@@ -3,18 +3,18 @@
 		<arg name="camera" value="cam_L"/>
 		<arg name="serial_no" value="332322072918"/>
 		<arg name="filters" value="pointcloud"/>
-		<arg name="enable_pointcloud" value="true"/>
+		<arg name="enable_pointcloud" value="false"/>
 	</include>
-	<!-- <include file="$(find realsense2_camera)/launch/rs_aligned_depth.launch">
+	<include file="$(find realsense2_camera)/launch/rs_aligned_depth.launch">
 		<arg name="camera" value="cam_M"/>
-		<arg name="serial_no" value="938422071315"/>
+		<arg name="serial_no" value="215222079389"/>
 		<arg name="filters" value="pointcloud"/>
-		<arg name="enable_pointcloud" value="true"/>
-	</include> -->
+		<arg name="enable_pointcloud" value="false"/>
+	</include>
 	<include file="$(find realsense2_camera)/launch/rs_aligned_depth.launch">
 		<arg name="camera" value="cam_R"/>
 		<arg name="serial_no" value="327122075069"/>
 		<arg name="filters" value="pointcloud"/>
-		<arg name="enable_pointcloud" value="true"/>
+		<arg name="enable_pointcloud" value="false"/>
 	</include>
 </launch>
