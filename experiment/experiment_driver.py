@@ -11,6 +11,22 @@ from pynput import keyboard
 DATA_ROOT = "data"
 AUDIO_RATE = 44100
 
+CONDITIONS = {
+'bang': """
+    1. hard-sphere              (high haptic, high audio)
+    2. soft-sphere              (high haptic, low audio)
+    3. soft-rattle              (low haptic, high audio)
+    4. hard-sphere-muffled      (high haptic, low audio)
+    """, 
+'slide': """
+    1. washboard-sphere         (high haptic, high audio)
+    2. soft-sphere              (high haptic, low audio)
+    3. soft-rattle              (low haptic, high audio)
+    4. washboard-sphere-muffled (high haptic, low audio)
+""", 
+'hammer':''
+}
+
 
 class SpacebarLogger:
     def __init__(self, trial_path):
@@ -49,7 +65,7 @@ def make_subject_dir(subject_id):
     return subject_path
 
 
-def run_trial(subject_path, trial_number, condition_name, use_button_log=False):
+def run_trial(subject_path, trial_number, condition_name, task_name, use_button_log=False):
     trial_name = f"trial_{trial_number:03d}"
     trial_path = os.path.join(subject_path, trial_name)
     os.makedirs(trial_path, exist_ok=True)
@@ -62,7 +78,8 @@ def run_trial(subject_path, trial_number, condition_name, use_button_log=False):
         "trial_name": trial_name,
         "condition": condition_name,
         "start_time": None,
-        "end_time": None
+        "end_time": None, 
+        "task": task_name,
     }
 
     input("Press ENTER to START trial...")
@@ -114,7 +131,7 @@ def append_to_csv(subject_path, metadata_dict):
     csv_path = os.path.join(subject_path, "metadata.csv")
     is_new = not os.path.exists(csv_path)
     with open(csv_path, "a", newline="") as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=["trial_name", "condition", "start_time", "end_time"])
+        writer = csv.DictWriter(csvfile, fieldnames=metadata_dict.keys())
         if is_new:
             writer.writeheader()
         writer.writerow(metadata_dict)
@@ -123,6 +140,7 @@ def append_to_csv(subject_path, metadata_dict):
 def main():
     subject_id = input("Enter Subject ID: ").strip()
     subject_path = make_subject_dir(subject_id)
+    task = input("Enter task name: ").strip()
 
     use_button = input("Record spacebar presses? (y/n): ").lower().strip() == "y"
 
@@ -131,8 +149,15 @@ def main():
     trial_number = 1
     try:
         while True:
-            condition = input(f"[Trial {trial_number}] Enter condition name: ").strip()
-            metadata = run_trial(subject_path, trial_number, condition, use_button_log=use_button)
+            print('Conditions:')
+            print(CONDITIONS[task])
+            condition = input(f"[Trial {trial_number}] Enter condition number: ").strip()
+            metadata = run_trial(
+                subject_path, 
+                trial_number, 
+                condition, 
+                task, 
+                use_button_log=use_button)
             append_to_csv(subject_path, metadata)
             trial_number += 1
     except KeyboardInterrupt:
