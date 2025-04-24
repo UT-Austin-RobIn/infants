@@ -3,9 +3,11 @@ import subprocess
 import time
 import yaml
 import csv
+import shutil
 import threading
-from datetime import datetime
+import re
 
+from datetime import datetime
 from pynput import keyboard
 
 DATA_ROOT = "data"
@@ -26,6 +28,17 @@ CONDITIONS = {
 """, 
 'hammer':''
 }
+
+
+def get_next_trial_number(subject_path):
+    trial_dirs = [
+        name for name in os.listdir(subject_path)
+        if os.path.isdir(os.path.join(subject_path, name)) and re.match(r"trial_\d{3}", name)
+    ]
+    if not trial_dirs:
+        return 1
+    trial_numbers = [int(name.split('_')[1]) for name in trial_dirs]
+    return max(trial_numbers) + 1
 
 
 class SpacebarLogger:
@@ -146,7 +159,7 @@ def main():
 
     print("\nReady to begin trials. Press Ctrl+C to exit.\n")
 
-    trial_number = 1
+    trial_number = get_next_trial_number(subject_path)
     try:
         while True:
             print('Conditions:')
@@ -158,8 +171,20 @@ def main():
                 condition, 
                 task, 
                 use_button_log=use_button)
-            append_to_csv(subject_path, metadata)
-            trial_number += 1
+            
+            keep = input("Keep trial? (y/n): ").lower().strip() == "y"
+            if keep: 
+                append_to_csv(subject_path, metadata)
+                trial_number += 1
+            else:
+                trial_name = f"trial_{trial_number:03d}"
+                trial_path = os.path.join(subject_path, trial_name)
+                if os.path.exists(trial_path):
+                    shutil.rmtree(trial_path)
+                    print(f"Deleted trial folder: {trial_path}")
+                else:
+                    print(f"Warning: trial path not found: {trial_path}")
+
     except KeyboardInterrupt:
         print("\nExperiment ended.")
 
