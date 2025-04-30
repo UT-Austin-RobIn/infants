@@ -59,8 +59,8 @@ def play_audio(mp3_path):
         print(f"Failed to play audio: {e}")
 
 def replay_trial(trial_path):
-    bag_path = os.path.join(trial_path, "ros.bag")
-    mp3_path = os.path.join(trial_path, "audio.mp3")
+    bag_path = os.path.join(trial_path, "trial_ros.bag")
+    mp3_path = os.path.join(trial_path, "trial_audio.wav")
 
     if not os.path.exists(bag_path):
         print(f"Missing bag file: {bag_path}")
@@ -98,12 +98,18 @@ def replay_trial(trial_path):
     audio_thread.start()
 
     last_time = None
+    last_valid_image = {topic: BLANK_IMAGE for topic in CAMERA_TOPICS}  
     for t in timestamps:
         images = images_by_time[t]
         tiles = []
 
         for topic in CAMERA_TOPICS:
-            img = images.get(topic, BLANK_IMAGE)
+            if topic in images:
+                img = images[topic]
+                last_valid_image[topic] = img
+            else:
+                img = last_valid_image[topic]
+           
             img = cv2.resize(img, (320, 240))  # resize for display
             tiles.append(img)
 
