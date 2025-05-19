@@ -1,0 +1,26 @@
+<launch>
+	<include file="$(find realsense2_camera)/launch/rs_camera.launch">
+		<arg name="camera" value="cam_L"/>
+		<arg name="serial_no" value="332322072918"/>
+		<arg name="align_depth" value="true"/>
+        <arg name="depth_fps" value="30"/>
+        <arg name="color_fps" value="30"/>
+        <arg name="enable_sync" value="true"/>
+	</include>
+	<include file="$(find realsense2_camera)/launch/rs_camera.launch">
+		<arg name="camera" value="cam_M"/>
+		<arg name="serial_no" value="215222079389"/>
+		<arg name="align_depth" value="true"/>
+        <arg name="depth_fps" value="30"/>
+        <arg name="color_fps" value="30"/>
+        <arg name="enable_sync" value="true"/>
+	</include> 
+	<include file="$(find realsense2_camera)/launch/rs_camera.launch">
+		<arg name="camera" value="cam_R"/>
+		<arg name="serial_no" value="327122075069"/>
+		<arg name="align_depth" value="true"/>
+        <arg name="depth_fps" value="30"/>
+        <arg name="color_fps" value="30"/>
+        <arg name="enable_sync" value="true"/>
+	</include>
+</launch>

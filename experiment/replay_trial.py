@@ -102,6 +102,7 @@ def replay_trial(trial_path):
     for t in timestamps:
         images = images_by_time[t]
         tiles = []
+        # print(t)
 
         for topic in CAMERA_TOPICS:
             if topic in images:
@@ -122,7 +123,7 @@ def replay_trial(trial_path):
         key = cv2.waitKey(1)
         if key == ord('q'):
             break
-
+        
         if last_time is not None:
             dt = t - last_time
             time.sleep(dt)
