@@ -23,4 +23,14 @@
         <arg name="color_fps" value="30"/>
         <arg name="enable_sync" value="true"/>
 	</include>
+	<include file="$(find audio_capture)/launch/capture.launch">
+		<arg name="ns" value="/"/>
+		<!-- <arg name="device" value="hw:1,0"/> -->
+		<arg name="sample_rate" value="48000"/>
+		<arg name="bitrate" value="256"/>
+  		<arg name="channels" value="1"/>
+	</include>
 </launch>
+
+
+

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-roslaunch launch/all_cams.launch 
+roslaunch launch/rs_cam.launch 

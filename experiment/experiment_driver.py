@@ -84,7 +84,7 @@ def run_trial(subject_path, trial_number, condition_name, task_name, use_button_
     os.makedirs(trial_path, exist_ok=True)
 
     rosbag_file = os.path.join(trial_path, "trial_ros")
-    audio_file = os.path.join(trial_path, "trial_audio.wav")
+    # audio_file = os.path.join(trial_path, "trial_audio.wav")
     metadata_file = os.path.join(trial_path, "trial_metadata.yaml")
 
     metadata = {
@@ -111,13 +111,9 @@ def run_trial(subject_path, trial_number, condition_name, task_name, use_button_
         "/cam_M/aligned_depth_to_color/image_raw",
         "/cam_M/color/camera_info",
         "/tf", "/tf_static", "/clock",
+        "/audio",
         "-O", rosbag_file,
         "-q"
-    ])
-
-    # Start audio recording
-    arecord_proc = subprocess.Popen([
-        "arecord", "-f", "cd", "-r", str(AUDIO_RATE), audio_file
     ])
 
     # Start spacebar logger
@@ -130,7 +126,6 @@ def run_trial(subject_path, trial_number, condition_name, task_name, use_button_
     metadata["end_time"] = datetime.now().isoformat()
 
     rosbag_proc.terminate()
-    arecord_proc.terminate()
     time.sleep(1)
 
     if spacebar_logger:
