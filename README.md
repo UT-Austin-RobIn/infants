@@ -54,8 +54,11 @@ Subject ID should be an integer. Task should be in `[bang, slide, hammer]`.
 # Network Setup
 Windows IP: `192.168.253.101`  
 Linux IP: `192.168.253.201`   
-Synology NAS: `192.168.253.1`    
+Synology NAS: `192.168.253.1` 
+Web interface for synology: `192.168.253.1:5000`.   
 Synology: `robin`, `Robot123`.  
+To mount: `sudo mount -t nfs 192.168.253.1:/volume1/tuli ~/synology-tuli/`    
+To rsync data: `rsync -r --info=progress2 data /home/robotlearning2/synology-tuli/`   
 
 ## ping windows desktop 
 set this IP on windows manually if needed. 
