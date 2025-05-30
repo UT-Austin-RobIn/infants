@@ -7,19 +7,31 @@ You can open this file in chrome for a better viewing experience.
 Point the browser to 
 `file:///home/robotlearning2/infants/notes.md` 
 
+
+## NTP time sync 
+The linux machine will serve time to the Windows machine.   
+Connect the two via ethernet. 
+In Windows Administrator CMD prompt: 
+`w32tm /query /status`  
+That should report `Leap Indicator: 0` and report the linux machine (192.168.253.201) as the source.  
+If not, they aren't synchronized.  You can try: 
+`w32tm /resync /force`  and then query status again.   
+Should that fail, you can restart w32tm. 
+`net stop w32time`  
+`net start w32time`  
+`w32tm /resync /force`   
+
 ## Running Trials
-
-Make sure Linux laptop connected to lab PC and time is synchronized.   
-See below --- `chronyc tracking` report latency to the desktop (192.168.253.101).  
-
-1. Open a terminal 
+1. Open a terminal on linux machine. 
 2. `cd ~/infants/`
 3. Launch the cameras: `./start_all.sh`   
 Verify that they start with the command:   
 ```
-rostopic hz /cam_R/color/image_raw /cam_L/color/image_raw /cam_R/aligned_depth_to_color/image_raw /cam_L/aligned_depth_to_color/image_raw
-```
-4. Run the experiment script: 
+./check_cams.sh
+```  
+You should see all 6 camera topics (color image raw and aligned depth image raw for cameras L, M, R).   
+
+4. Activate the virtualenv, `source ~/envs/infants/bin/activate` and run the experiment script: 
 `python experiment/experiment_driver.py`.
 5. It will prompt for `subject ID`, `task name`, and `condition ID`. 
 Subject ID should be an integer. Task should be in `[bang, slide, hammer]`.    
@@ -40,21 +52,19 @@ Subject ID should be an integer. Task should be in `[bang, slide, hammer]`.
 8. Press `ctrl+c` to interrupt and kill the program. 
 
 # Network Setup
-Windows IP: `ping 192.168.253.101`  
-Linux IP: `192.168.253.201`
-
-## set laptop IP 
-Once ethernet is plugged in, it should automatically assign the IP.   
-`ip addr` should show `192.168.253.201`.   
-You can manually set it like so:   
-`sudo ip addr add 192.168.253.201/24 dev enp1s0`
+Windows IP: `192.168.253.101`  
+Linux IP: `192.168.253.201`   
+Synology NAS: `192.168.253.1`    
+Synology: `robin`, `Robot123`.  
 
 ## ping windows desktop 
-set this IP on windows manually. 
+set this IP on windows manually if needed. 
 `ping 192.168.253.101`
 
-## chrony configuration -- add the server to the config and verify 
-`sudo vim /etc/chrony/chrony.conf `  
-`chronyc sources` # <-- should report 192.168.253.101 with *   
-`chronyc tracking` # <-- should tell latency to the server  
-
+## visualizing data
+`rqt_bag <path to bag>` and open a bagfile with the gui. This will show images but audio will not play properly.   
+You can replay the audio with 
+```
+roslaunch audio_play play.launch
+rosbag play <path to bag>
+```

@@ -100,7 +100,7 @@ def run_trial(subject_path, trial_number, condition_name, task_name, use_button_
 
     # Start rosbag (limited topics)
     rosbag_proc = subprocess.Popen([
-        "rosbag", "record",
+        "rosbag", "record", "-b", "0",
         "/cam_L/color/image_raw",
         "/cam_L/aligned_depth_to_color/image_raw",
         "/cam_L/color/camera_info",
@@ -111,7 +111,7 @@ def run_trial(subject_path, trial_number, condition_name, task_name, use_button_
         "/cam_M/aligned_depth_to_color/image_raw",
         "/cam_M/color/camera_info",
         "/tf", "/tf_static", "/clock",
-        "/audio",
+        "/audio/audio",
         "-O", rosbag_file,
         "-q"
     ])
