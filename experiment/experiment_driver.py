@@ -151,7 +151,7 @@ def append_to_csv(subject_path, metadata_dict):
 def main():
     subject_id = input("Enter Subject ID: ").strip()
     subject_path = make_subject_dir(subject_id)
-    task = input("Enter task name: ").strip()
+    task = input("Enter task name [bang/slide/hammer]: ").strip()
 
     use_button = input("Record spacebar presses? (y/n): ").lower().strip() == "y"
 
