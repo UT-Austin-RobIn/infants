@@ -122,11 +122,11 @@ def run_trial(subject_path, trial_number, condition_name, task_name, use_button_
         spacebar_logger.start()
 
     input("Press ENTER to STOP trial...")
-
     metadata["end_time"] = datetime.now().isoformat()
-
     rosbag_proc.terminate()
+
     time.sleep(1)
+    #print("here4")
 
     if spacebar_logger:
         spacebar_logger.stop()
@@ -134,6 +134,7 @@ def run_trial(subject_path, trial_number, condition_name, task_name, use_button_
 
     with open(metadata_file, "w") as f:
         yaml.dump(metadata, f)
+    #print("here5")
 
     return metadata
 

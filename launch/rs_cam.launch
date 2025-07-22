@@ -9,7 +9,7 @@
 	</include>
 	<include file="$(find realsense2_camera)/launch/rs_camera.launch">
 		<arg name="camera" value="cam_M"/>
-		<arg name="serial_no" value="215222079389"/>
+		<arg name="serial_no" value="332522077342"/>
 		<arg name="align_depth" value="true"/>
         <arg name="depth_fps" value="30"/>
         <arg name="color_fps" value="30"/>
@@ -25,10 +25,10 @@
 	</include>
 	<include file="$(find audio_capture)/launch/capture.launch">
 		<arg name="ns" value="audio/"/>
-		<!-- <arg name="device" value="hw:1,0"/> -->
-		<arg name="sample_rate" value="48000"/>
-		<arg name="bitrate" value="256"/>
+		<arg name="device" value="hw:1,0"/>
+		<arg name="sample_rate" value="44100"/>
   		<arg name="channels" value="1"/>
+  		<arg name="chunk_size" value="2048"/>
 	</include>
 </launch>
 

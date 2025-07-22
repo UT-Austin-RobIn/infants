@@ -34,6 +34,7 @@ You should see all 6 camera topics (color image raw and aligned depth image raw 
 4. Activate the virtualenv, `source ~/envs/infants/bin/activate` and run the experiment script: 
 `python experiment/experiment_driver.py`.
 5. It will prompt for `subject ID`, `task name`, and `condition ID`. 
+Make sure the subject ID 3 digits. Example (1) write 001 for (2) write 002
 Subject ID should be an integer. Task should be in `[bang, slide, hammer]`.    
     Condition numbers for banging: 
     1. hard-sphere              (high haptic, high audio)
