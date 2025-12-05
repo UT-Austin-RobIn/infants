@@ -1,0 +1,26 @@
+include README.md
+include requirements.txt
+include LICENSE
+include MANIFEST.in
+recursive-include launch *.launch
+recursive-include launch *.rviz
+include *.yaml
+include *.yml
+include *.sh
+include *.txt
+include *.tsv
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+recursive-exclude * *.bag
+recursive-exclude * *.avi
+recursive-exclude * *.jpg
+recursive-exclude * *.png
+recursive-exclude * data
+recursive-exclude * backup
+recursive-exclude * qualisys_camera_images*
+recursive-exclude * rs_images*
+recursive-exclude * rs_L_images*
+recursive-exclude * rs_M_images*
+recursive-exclude * scripts/__pycache__
+recursive-exclude * utils/__pycache__
+recursive-exclude * experiment/__pycache__

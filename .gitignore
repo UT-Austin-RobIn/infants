@@ -1,0 +1,6 @@
+qualisys_camera_images/
+rs_images/
+data/
+
+*.avi
+*.bag
